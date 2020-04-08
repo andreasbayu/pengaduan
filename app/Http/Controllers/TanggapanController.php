@@ -16,7 +16,7 @@ class TanggapanController extends Controller
      */
     public function index()
     {
-        // dimana status masih pending
+        // dimana status masih proses
         $data = Pengaduan::where('status' ,'proses')->orderBy('created_at','desc')->get();
 
         return view('admin.daftar_laporan',['datas'=>$data]);
@@ -45,7 +45,7 @@ class TanggapanController extends Controller
     public function terima(Request $req, $id)
     {
         $pengaduan = Pengaduan::where(['id'=>$id])->first();
-        $pengaduan->status = "proses";
+        $pengaduan->status = "selesai";
         $pengaduan->save();
 
         $tanggapan = new Tanggapan;

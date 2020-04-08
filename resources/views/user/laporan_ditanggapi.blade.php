@@ -13,7 +13,7 @@
 <!-- OVERVIEW -->
 <div class="panel panel-headline">
   <div class="panel-heading">
-      <h2 class="panel-title">Data Laporan Terkirim</h2>
+      <h2 class="panel-title">Data Laporan Ditanggapi</h2>
       @php
           $date = date('j F Y ')
       @endphp
@@ -37,17 +37,23 @@
               <th>Tanggal Dibalas</th>
           </thead>
               @foreach ($datas as $key => $data)
-                  @php 
+                  @php
                     $foto = $data->foto
                   @endphp
-              <tbody>
-                  <td>{{$key+1}}</td>
-                  <td>{{$data->isi_laporan}}</td>
-                  <td>{{$data->status }}</td>
-                  <td><div style="height:16px; overflow:hidden">{{$data->tanggapan->tanggapan }}</div> </td>
-                  <td>{{$data->created_at}}</td>             
-                  <td>{{$data->tanggapan->created_at}}</td> 
-              </tbody>
+                  @if (isset($data->tanggapan))
+                    <tbody>
+                        <td>{{$key+1}}</td>
+                        <td>{{$data->isi_laporan}}</td>
+                        <td>@if ($data->status == '0')
+                            <span style="color:red">Laporan Ditolak</div>
+                            @else
+                                {{$data->status}}
+                            @endif</td>
+                        <td>{{$data->tanggapan->tanggapan }}</td>
+                        <td>{{$data->created_at}}</td>
+                        <td>{{$data->tanggapan->created_at}}</td>
+                    </tbody>
+                  @endif
               @endforeach
       </table>
   </div>

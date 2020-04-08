@@ -18,8 +18,41 @@ class PetugasController extends Controller
      */
     public function index()
     {
+        // get tanggal Sekarang
+            $bln    = date('Y-m');
+            $hari   = date('Y-m-d');
+        $bulanIni   = Pengaduan::where('created_at','like',$bln.'%')->count();
+        $proses     = Pengaduan::where('status','proses')->count();
+
+        $user       = User::count();
+        //percent
+        $pengaduanAll   = Pengaduan::where('created_at','like',$hari.'%')->count();
+        $ditanggapi     = Pengaduan::where('created_at','like',$hari.'%')->where('status','selesai')->orWhere('status','0')->count();
+        // chart 2 selesai Hari ini
+        $selesaiChart       = Pengaduan::where('status','selesai')->Where('created_at','like',$hari.'%')->count();
+        $prosesChart        = Pengaduan::where('status','proses')->Where('created_at','like',$hari.'%')->count();
+        $tolakChart         = Pengaduan::where('status','0')->Where('created_at','like',$hari.'%')->count();
+        // pembulatan bilangan bulat terdekat
+        if (($pengaduanAll == 0) && ($ditanggapi == 0)) {
+            $per        = 0;
+        } else if(($pengaduanAll != 0) && ($ditanggapi != 0) ) {
+            $per        = round(($ditanggapi / $pengaduanAll) * 100);
+        } else  {
+            $per        = 0;
+        }
         //
-        return view('admin.dashboard');
+        $test[] = [
+            'Total Pengaduan Hari Ini    = ' => $pengaduanAll,
+            'Pengaduan dtanggapi Hr Ini  = ' => $ditanggapi,
+            'Persentase Selesai Hari Ini = ' => $per,
+            'Tanggal Ini                 = ' => $hari,
+        ];
+        $test2[] = [$selesaiChart,$prosesChart,$tolakChart];
+        // dd($test);
+
+        return view('admin.dashboard',['proses'=> $proses,'bulanIni'=>$bulanIni,'jumlahUser'=>$user,
+                                       'persen'=>$per,'selesaiChart'=>$selesaiChart,'prosesChart'=>$prosesChart,
+                                       'tolakChart'=>$tolakChart]);
     }
 
     /**
@@ -86,11 +119,6 @@ class PetugasController extends Controller
     public function destroy(Petugas $petugas)
     {
         //
-    }
-    public function pengaduan_pending()
-    {
-        $data = Pengaduan::where('status','pending')->count();
-        echo json_encode($data);
     }
     public function adminLogout()
     {

@@ -33,7 +33,6 @@
                                     <th>No.</th>
                                     <th>Isi Laporan</th>
                                     <th>Foto</th>
-                                    <th>Status</th>
                                     <th>Tanggal Pengiriman</th>
                                     <th>Aksi</th>
                                 </thead>
@@ -55,21 +54,21 @@
                                                 <img src="{{ asset("gambar_laporan/$foto")}}" alt="gambar_laporan" width="100">
                                             @endif
                                         </td>
-                                        <td>
-                                            @if ($data->status == null)
-                                                Dihapus
-                                            @else
-                                                {{$data->status}}
-                                            @endif
-                                        </td>
                                         <td>{{$data->created_at}}</td>
-                                        <td>@if ($data->status == 'pending')
+                                        <td>@if ($data->status == 'proses')
                                                 <a href="{{ url("user/reportRestore",$data->id)}}" class="btn btn-success">Restore</a>
                                                 <a href="{{url("user/reportDeletePermanent",$data->id)}}" class="btn btn-danger">Hapus Permanen</a>
                                             @endif
                                         </td>
                                     </tbody>
                                     @endforeach
+                                <tfoot>
+                                    <th>No.</th>
+                                    <th>Isi Laporan</th>
+                                    <th>Foto</th>
+                                    <th>Tanggal Pengiriman</th>
+                                    <th>Aksi</th>
+                                </tfoot>
                             </table>
                         </div>
                         <div class="panel-footer">

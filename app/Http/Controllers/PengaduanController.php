@@ -16,10 +16,10 @@ class PengaduanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() 
+    public function index()
     {
         $nik  = Session::get('nik');
-        $data = Pengaduan::where('nik',$nik)->orderBy('created_at','desc')->paginate(10);
+        $data = Pengaduan::where('nik',$nik)->orderBy('created_at','desc')->paginate(20);
         //
         return view('user.laporan_terkirim',['datas' => $data]);
     }
@@ -56,7 +56,7 @@ class PengaduanController extends Controller
         // ambil nik dari sesi
         $nik= Session::get('nik');
         // tampilkan semua data penduan berdasarkan nik
-        $pengaduan = Pengaduan::where('nik',$nik)->orderBy('created_at','desc')->with('tanggapan')->paginate(10);
+        $pengaduan = Pengaduan::where('nik',$nik)->orderBy('created_at','desc')->with('tanggapan')->paginate(20);
         // dd($pengaduan);
         return view('user.laporan_ditanggapi',['datas'=>$pengaduan]);
     }
@@ -162,10 +162,4 @@ class PengaduanController extends Controller
         Alert::success('Berhasil !','Laporan berhasil dihapus permanen');
         return back();
     }
-    public function findReport(Request $request)
-    {
-        $find       = $request->cari;
-        Pengaduan::where();
-    }
-
 }

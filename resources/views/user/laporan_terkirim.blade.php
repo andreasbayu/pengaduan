@@ -19,7 +19,7 @@
                             @endphp
                             <p class="panel-subtitle" >Tanggal : {{$date}}  Jam : <a id="waktu"></a> </p>
                             <div class="alert alert-warning">
-                                Perhatian !! Laporan Yang Sudah Di Proses Atau Selesai Tidak Dapat Dirubah & Dihapus ...
+                                Perhatian !! Laporan Yang Sudah Tidak Diterima (Ditolak) Atau Selesai Tidak Dapat Dirubah & Dihapus ...
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -62,17 +62,14 @@
                                             @endif
                                         </td>
                                         <td>
-                                            {{-- jika data null tau bisa menggunakan empty() --}}
-                                            @if ($data->status == null)
-                                                Menunggu Konfirmasi
-                                            @elseif($data->status == '0')
+                                            @if ($data->status == '0')
                                             <span style="color:red">Laporan Ditolak</div>
                                             @else
                                                 {{$data->status}}
                                             @endif
                                         </td>
                                         <td>{{$data->created_at}}</td>
-                                        <td>@if ($data->status == 'pending')
+                                        <td>@if ($data->status == 'proses')
                                                 {{-- <a href="#" class="btn btn-primary"><i class="lnr lnr-pencil"></i></a> --}}
                                                 <a href="{{ url("user/deleteReport/$data->id") }}" class="btn btn-danger"><i class="lnr lnr-trash"></i></a>
                                             @endif

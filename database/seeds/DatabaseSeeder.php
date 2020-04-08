@@ -24,6 +24,17 @@ class DatabaseSeeder extends Seeder
                 'foto_user'     => 'user-male.jpg',
                 'created_at'    => now(),
             ]);
+            DB::table('user')->insert([
+                'nik'           => 3325124567891235,
+                'nama'          => 'Yulianto Bayu',
+                'email'         => 'yuliantobayu@gmail.com',
+                'username'      => 'yulianto',
+                'password'      => bcrypt('123456'),
+                'jenis_kelamin' => 'laki-laki',
+                'telp'          => '082333456789',
+                'foto_user'     => 'user-male.jpg',
+                'created_at'    => now(),
+            ]);
             DB::table('petugas')->insert([
                 'nama'          => 'Yulianto Bayu Prasetyo',
                 'username'      => 'admin',
@@ -32,6 +43,7 @@ class DatabaseSeeder extends Seeder
                 'telp'          => '085123456789',
                 'foto_admin'    => 'admin.jpg',
                 'level'         => 'admin',
+                'created_at'    => now(),
             ]);
             DB::table('petugas')->insert([
                 'nama'          => 'Andreas Yulianto Bayu',
@@ -41,7 +53,7 @@ class DatabaseSeeder extends Seeder
                 'telp'          => '085987654321',
                 'foto_admin'    => 'admin.jpg',
                 'level'         => 'petugas',
-
+                'created_at'    => now(),
             ]);
             DB::table('kategori')->insert(
                 ['kategori'      => 'keamanan',]

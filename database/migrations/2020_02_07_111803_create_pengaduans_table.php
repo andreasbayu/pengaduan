@@ -17,7 +17,7 @@ class CreatePengaduansTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('nik');
             $table->text('isi_laporan');
-            $table->enum('status',['pending','0','proses','selesai']);
+            $table->enum('status',['proses','0','selesai']);
             $table->string('foto')->nullable();
             $table->bigInteger('id_kategori');
             $table->timestamps();

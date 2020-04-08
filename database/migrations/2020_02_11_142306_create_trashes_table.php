@@ -18,8 +18,8 @@ class CreateTrashesTable extends Migration
             $table->bigInteger('nik');
             $table->bigInteger('id_kategori');
             $table->text('isi_laporan');
-            $table->enum('status',['pending','0','proses','selesai']);
-            $table->string('foto');
+            $table->enum('status',['proses','0','selesai']);
+            $table->string('foto')->nullable();
             $table->timestamps();
         });
     }

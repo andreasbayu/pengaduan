@@ -55,14 +55,7 @@
 	<script src="{{ asset ('assets/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
 	<script src="{{ asset ('assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
 	<script src="{{ asset ('assets/scripts/klorofil-common.js')}}"></script>
-	<script>
-		var test = setInterval(waktuIndonesia);
 
-		function waktuIndonesia() {
-			var WIB = new Date().toLocaleTimeString("id-ID",{timeZone:"Asia/Jakarta"});
-			document.getElementById("waktu").innerHTML = WIB.toLocaleString();
-		}
-	</script>
 </body>
 
 </html>
