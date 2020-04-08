@@ -94,6 +94,7 @@
   <script src="{{ asset ('sb2/js/sb-admin-2.min.js')}}"></script>
   @yield('script')
   @yield('chart')
+
 </body>
 
 </html>
