@@ -10,7 +10,6 @@ use App\Petugas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 class UserController extends Controller
 {
@@ -20,9 +19,11 @@ class UserController extends Controller
         return view('user.home');
     }
     public function login(){
-        if(Session::get('login') == TRUE)
-        {
+        if (Session::get('login') == TRUE) {
             return redirect('user/home');
+        }
+        if (Session::get('login_admin')== TRUE){
+            return redirect('/admin/dashboard');
         }
         return view('user.auth.login');
     }
@@ -58,7 +59,10 @@ class UserController extends Controller
             if(Hash::check($password,$admin->password))
                 {
                     Session::put('login_admin',TRUE);
-                    Session::put('level',$admin->status);
+                    Session::put('admin_id',$admin->id);
+                    Session::put('level',$admin->level);
+                    Session::put('nama',$admin->nama);
+                    Session::put('foto',$admin->foto_admin);
                     Alert::success('Berhasil !!','Anda Berhasil Masuk');
                     return redirect('/admin/dashboard');
                 }

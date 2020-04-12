@@ -2,7 +2,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
 	<!-- Sidebar - Brand -->
-	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url('admin/dashboard/')}}">
 	  <div class="sidebar-brand-icon rotate-n-15">
 		<i class="fas fa-laugh-wink"></i>
 	  </div>
@@ -31,13 +31,13 @@
 	<li class="nav-item">
 	  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
 		<i class="fas fa-fw fa-cog"></i>
-		<span>Components</span>
+		<span>Akun</span>
 	  </a>
 	  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 		<div class="bg-white py-2 collapse-inner rounded">
-		  <h6 class="collapse-header">Custom Components:</h6>
-		  <a class="collapse-item" href="buttons.html">Buttons</a>
-		  <a class="collapse-item" href="cards.html">Cards</a>
+		  <h6 class="collapse-header">Akun:</h6>
+		  <a class="collapse-item" href="#">Edit Profil</a>
+		  <a class="collapse-item" href="{{ url('/admin/logout')}}">Keluar</a>
 		</div>
 	  </div>
 	</li>
@@ -53,8 +53,8 @@
 		  <h6 class="collapse-header">Pengaturan : </h6>
 		  <a class="collapse-item @yield('activedkt')" href="{{ url ('admin/kategori_pelaporan')}}">Kategori</a>
 		  <a class="collapse-item @yield('activedms')" href="{{ url('admin/daftar_masyarakat')}}">Masyarakat</a>
-		  <a class="collapse-item" href="utilities-animation.html">Petugas</a>
-		  <a class="collapse-item" href="utilities-other.html">Other</a>
+		  <a class="collapse-item" href="#">Petugas</a>
+		  <a class="collapse-item" href="#">Other</a>
 		</div>
 	  </div>
 	</li>
@@ -64,7 +64,7 @@
 
 	<!-- Heading -->
 	<div class="sidebar-heading">
-	  Addons
+	  Table
 	</div>
 
 	{{-- <!-- Nav Item - Pages Collapse Menu -->
@@ -88,17 +88,17 @@
 	</li> --}}
 
 	<!-- Nav Item - Charts -->
-	<li class="nav-item">
+	{{-- <li class="nav-item">
 	  <a class="nav-link" href="charts.html">
 		<i class="fas fa-fw fa-chart-area"></i>
 		<span>Charts</span></a>
-	</li>
+	</li> --}}
 
 	<!-- Nav Item - Tables -->
 	<li class="nav-item @yield('activedl')">
 	  <a class="nav-link" href="{{ url('admin/daftar_laporan')}}">
 		<i class="fas fa-fw fa-table"></i>
-		<span>Tables</span></a>
+		<span>Tanggapi Pengaduan</span></a>
 	</li>
 
 	<!-- Divider -->

@@ -6,6 +6,7 @@ use App\Petugas;
 use App\Pengaduan;
 use App\Kategori;
 use App\User;
+use PDF;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,9 @@ class PetugasController extends Controller
      */
     public function index()
     {
+        // bulan
+            $jan = '2020-01'; $feb  = '2020-02'; $mar = '2020-03'; $apr = '2020-04'; $mei = '2020-05'; $jun = '2020-06';
+            $jul = '2020-07'; $agu  = '2020-08'; $sep = '2020-09'; $okt = '2020-10'; $nov = '2020-11'; $des = '2020-12';
         // get tanggal Sekarang
             $bln    = date('Y-m');
             $hari   = date('Y-m-d');
@@ -27,11 +31,28 @@ class PetugasController extends Controller
         $user       = User::count();
         //percent
         $pengaduanAll   = Pengaduan::where('created_at','like',$hari.'%')->count();
-        $ditanggapi     = Pengaduan::where('created_at','like',$hari.'%')->where('status','selesai')->orWhere('status','0')->count();
+        // select * from pengaduan where (status="selesai" or status ="0") and created_at like'2020-04-10%'
+        $ditanggapi     = Pengaduan::where('created_at','like',$hari.'%')->where( function ($query){
+                            $query->where('status','0')->orWhere('status','selesai');
+                          })->count();
         // chart 2 selesai Hari ini
         $selesaiChart       = Pengaduan::where('status','selesai')->Where('created_at','like',$hari.'%')->count();
         $prosesChart        = Pengaduan::where('status','proses')->Where('created_at','like',$hari.'%')->count();
         $tolakChart         = Pengaduan::where('status','0')->Where('created_at','like',$hari.'%')->count();
+        // chart 1
+        $jan                = Pengaduan::where('created_at','like',$jan.'%')->count();
+        $feb                = Pengaduan::where('created_at','like',$feb.'%')->count();
+        $mar                = Pengaduan::where('created_at','like',$mar.'%')->count();
+        $apr                = Pengaduan::where('created_at','like',$apr.'%')->count();
+        $mei                = Pengaduan::where('created_at','like',$mei.'%')->count();
+        $jun                = Pengaduan::where('created_at','like',$jun.'%')->count();
+        $jul                = Pengaduan::where('created_at','like',$jul.'%')->count();
+        $agu                = Pengaduan::where('created_at','like',$agu.'%')->count();
+        $sep                = Pengaduan::where('created_at','like',$sep.'%')->count();
+        $okt                = Pengaduan::where('created_at','like',$okt.'%')->count();
+        $nov                = Pengaduan::where('created_at','like',$nov.'%')->count();
+        $des                = Pengaduan::where('created_at','like',$des.'%')->count();
+        $bulan = [$jan,$feb,$mar,$apr,$mei,$jun,$jul,$agu,$sep,$okt,$nov,$des,];
         // pembulatan bilangan bulat terdekat
         if (($pengaduanAll == 0) && ($ditanggapi == 0)) {
             $per        = 0;
@@ -48,77 +69,11 @@ class PetugasController extends Controller
             'Tanggal Ini                 = ' => $hari,
         ];
         $test2[] = [$selesaiChart,$prosesChart,$tolakChart];
-        // dd($test);
-
+        // dd($bulan);
+            // array();
         return view('admin.dashboard',['proses'=> $proses,'bulanIni'=>$bulanIni,'jumlahUser'=>$user,
                                        'persen'=>$per,'selesaiChart'=>$selesaiChart,'prosesChart'=>$prosesChart,
-                                       'tolakChart'=>$tolakChart]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Petugas  $petugas
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Petugas $petugas)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Petugas  $petugas
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Petugas $petugas)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Petugas  $petugas
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Petugas $petugas)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Petugas  $petugas
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Petugas $petugas)
-    {
-        //
+                                       'tolakChart'=>$tolakChart,'bulan'=> $bulan]);
     }
     public function adminLogout()
     {
@@ -260,5 +215,28 @@ class PetugasController extends Controller
         $data->telp             = $request->telp;
         $data->save();
         return redirect()->back();
+    }
+    public function generatePdf(Request $request)
+    {
+        if (Session::get('level') == 'admin') {
+            $bln = $request->bulan;
+            $thn = $request->tahun;
+            $tanggal = "$thn-$bln";
+            $judul   = ['judul' => 'Laporan Pengaduan'];
+            $data = Pengaduan::where('created_at','like',$tanggal.'%')->with('tanggapan')->get();
+            // dd($data);
+            $pdf  = PDF::loadView('admin.asset.generate_laporan',$judul,['datas'=>$data]);
+            return $pdf->stream('laporan-pengaduan.pdf');
+        } else {
+            return redirect()->back();
+        }
+    }
+    public function pilihTanggal()
+    {
+        if (Session::get('level') == 'admin') {
+            return view('admin.asset.pilih_tanggal');
+        } else {
+            return redirect()->back();
+        }
     }
 }

@@ -61,4 +61,6 @@ Route::group(['middleware' => ['cekLoginAdmin']], function(){
     Route::get('/admin/delete_user/{nik}','PetugasController@deleteUser');
     Route::post('/admin/update_user/{nik}','PetugasController@updateUser');
     Route::post('/admin/tambah_user','PetugasController@tambahUser');
+    Route::get('/admin/generate_pdf/generate','PetugasController@generatePdf');
+    Route::get('/admin/generate_pdf/pilih_tanggal','PetugasController@pilihTanggal');
 });

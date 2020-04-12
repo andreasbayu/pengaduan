@@ -1,6 +1,6 @@
 @extends('admin.app')
 @section('title')
-    - Admin
+    - Dashboard
 @endsection
 @section('activedb')
     active
@@ -10,7 +10,9 @@
 		<!-- Page Heading -->
 		<div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Laporan</a>
+            @if (Session::get('level') == 'admin')
+              <a href="{{ url('admin/generate_pdf/pilih_tanggal')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Laporan</a>
+            @endif
           </div>
 
           <!-- Content Row -->
@@ -180,9 +182,9 @@
             var myLineChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Des"],
+                labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"],
                 datasets: [{
-                label: "Earnings",
+                label: "Pengaduan",
                 lineTension: 0.3,
                 backgroundColor: "rgba(78, 115, 223, 0.05)",
                 borderColor: "rgba(78, 115, 223, 1)",
@@ -194,7 +196,8 @@
                 pointHoverBorderColor: "rgba(78, 115, 223, 1)",
                 pointHitRadius: 10,
                 pointBorderWidth: 2,
-                data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 40000, 20000, 25000, 10000],
+                // array dibrntuk menjadi json dan menggunakan echo spesial agar tidak dijadiak html
+                data: {!!json_encode($bulan)!!},
                 }],
             },
             options: {
@@ -226,7 +229,7 @@
                     padding: 10,
                     // Include a dollar sign in the ticks
                     callback: function(value, index, values) {
-                        return '$' + number_format(value);
+                        return '' + number_format(value);
                     }
                     },
                     gridLines: {
@@ -258,7 +261,7 @@
                 callbacks: {
                     label: function(tooltipItem, chart) {
                     var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                    return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+                    return datasetLabel + ': ' + number_format(tooltipItem.yLabel);
                     }
                 }
                 }

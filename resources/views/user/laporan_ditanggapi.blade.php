@@ -37,9 +37,6 @@
               <th>Tanggal Dibalas</th>
           </thead>
               @foreach ($datas as $key => $data)
-                  @php
-                    $foto = $data->foto
-                  @endphp
                   @if (isset($data->tanggapan))
                     <tbody>
                         <td>{{$key+1}}</td>
