@@ -51,7 +51,6 @@ Route::group(['middleware' => ['cekLoginAdmin']], function(){
     Route::get('/refresh','TanggapanController@refresh');
     Route::post('/terima/{id}','TanggapanController@terima');
     Route::post('/tolak/{id}','TanggapanController@tolak');
-    Route::get('/admin/laporan_pending','PetugasController@pengaduan_pending');
     Route::get('/admin/kategori_pelaporan','PetugasController@kategoriPelaporan');
     Route::get('/admin/update_status_pelaporan/{id}','PetugasController@updateStatusPelaporan');
     Route::get('/admin/delete_kategori/{id}','PetugasController@deleteKategori');
@@ -63,4 +62,5 @@ Route::group(['middleware' => ['cekLoginAdmin']], function(){
     Route::post('/admin/tambah_user','PetugasController@tambahUser');
     Route::get('/admin/generate_pdf/generate','PetugasController@generatePdf');
     Route::get('/admin/generate_pdf/pilih_tanggal','PetugasController@pilihTanggal');
+    Route::get('/admin/daftar_laporan_ditanggapi','TanggapanController@daftarLaporanDitanggapi');
 });

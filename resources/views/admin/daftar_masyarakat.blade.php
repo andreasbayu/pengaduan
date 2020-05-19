@@ -27,7 +27,7 @@
                 </div>
                 @endif
               <div class="table-responsive">
-                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalTambah"><span>+ Tambah Kategori</span></a>
+                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalTambah"><span>+ Tambah Masyarakat</span></a>
                 <br>
                 <br>
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -158,7 +158,7 @@
                                         @csrf
                                         <div class="form-group">
                                             <label for="nik">NIK :</label>
-                                            <input type="number" name="nik" id="nik" required class="form-control" value="{{$data->nik}}" min="16" max="16">
+                                            <input type="number" name="nik" id="nik" required class="form-control" value="{{$data->nik}}">
                                         </div>
                                         <div class="form-group">
                                             <label for="nama">Nama : </label>
@@ -174,7 +174,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="password">Password : </label>
-                                            <input type="password" name="password" id="password" required class="form-control" value="{{$data->password}}">
+                                            <input type="password" name="password" id="password" required class="form-control" value="{{decrypt($data->password)}}">
                                         </div>
                                         <div class="form-group">
                                             <label class="radio" for="jenis_kelamin">Jenis Kelamin</label>

@@ -138,8 +138,8 @@ class UserController extends Controller
             'foto.required'     => ':attribute Tidak Boleh Kosong'
         ];
         $rules = [
-            'foto'          => 'image|mimes:jpg,jpeg,png',
-            'isi_laporan'   => 'required|min:20',
+            'foto'          => 'image|mimes:jpg,jpeg,png|max:1024',
+            'isi_laporan'   => 'required|min:10',
         ];
         $this->validate($request,$rules,$messages);
         if($request->foto != null){
@@ -177,7 +177,7 @@ class UserController extends Controller
             'image'             => 'File Harus berupa gambar',
         ];
         $rules      = [
-            'foto_user'     => 'image|max:1024',
+            'foto_user'     => 'image|mimes:jpg,jpeg,png|max:1024',
         ];
 
         $this->validate($request,$rules,$messages);

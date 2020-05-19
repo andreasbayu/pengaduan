@@ -24,6 +24,8 @@
 
   <!-- Page Wrapper -->
   <div id="wrapper">
+        {{-- sweetalert --}}
+        @include('sweetalert::alert')
 
 		{{-- sidebar --}}
 		@include('admin.layout.sidebar')

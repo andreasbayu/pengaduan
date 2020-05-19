@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Tanggapan;
 use App\Pengaduan;
-use Datatables;
 use Illuminate\Http\Request;
 
 class TanggapanController extends Controller
@@ -20,10 +19,6 @@ class TanggapanController extends Controller
         $data = Pengaduan::where('status' ,'proses')->orderBy('created_at','desc')->get();
 
         return view('admin.daftar_laporan',['datas'=>$data]);
-    }
-    public function dataLaporan()
-    {
-        return Datatables::of(Pengaduan::query())->make(true);
     }
     public function refresh()
     {
@@ -54,5 +49,10 @@ class TanggapanController extends Controller
         $tanggapan->id_petugas      = $req->id_petugas;
         $tanggapan->save();
         return back();
+    }
+    public function daftarLaporanDitanggapi()
+    {
+        $data = Pengaduan::with('tanggapan')->where('status','0')->orWhere('status','selesai')->get();
+        return view('admin/daftar_laporan_ditanggapi',['datas'=>$data]);
     }
 }

@@ -14,11 +14,12 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-               <a class="btn btn-primary" href="{{ url('/refresh')}}"><i class="fas fa-sync-alt" aria-hidden="true"></i> Refresh</a>
+              <h6 class="m-0 font-weight-bold text-primary">Tanggapi Laporan</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
+                <a class="btn btn-primary" href="{{ url('/refresh')}}"><i class="fas fa-sync-alt" aria-hidden="true"></i> Refresh</a>
+                <br> <br>
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
@@ -84,9 +85,9 @@
                             <form action="{{ url("terima/$data->id")}}" method="post">
                               @csrf
                               <div class="form-group">
-                                <input type="text" name="id_pengaduan" id="id_pengaduan" value="{{ $data->id }}" readonly class="form-control">
-                                <label for="id_petugas">ID Petugas</label>
-                                <input type="number" name="id_petugas" id="id_petugas" value="1" class="form-control">
+                                <input type="hidden" name="id_pengaduan" id="id_pengaduan" value="{{ $data->id }}" readonly class="form-control">
+                                <label for="id_petugas">Nama Petugas : {{ Session::get('nama') }}</label>
+                                <input type="hidden" name="id_petugas" id="id_petugas" value="{{ Session::get('admin_id') }}" class="form-control">
                               </div>
                               <div class="form-group">
                                 <label for="message-text" class="col-form-label">Tanggapan :</label>
@@ -115,9 +116,9 @@
                             <form action="{{ url("tolak/$data->id")}}" method="post">
                               @csrf
                               <div class="form-group">
-                                <input type="text" name="id_pengaduan" id="id_pengaduan" value="{{ $data->id }}" readonly class="form-control">
-                                <label for="id_petugas">ID Petugas</label>
-                                <input type="number" name="id_petugas" id="id_petugas" value="1" class="form-control">
+                                <input type="hidden" name="id_pengaduan" id="id_pengaduan" value="{{ $data->id }}" readonly class="form-control">
+                                <label for="id_petugas">Nama Petugas : {{ Session::get('nama') }}</label>
+                                <input type="hidden" name="id_petugas" id="id_petugas" value="{{ Session::get('admin_id') }}" class="form-control">
                               </div>
                               <div class="form-group">
                                 <label for="message-text" class="col-form-label">Alasan Penolakan :</label>
